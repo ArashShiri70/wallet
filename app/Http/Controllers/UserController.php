@@ -66,7 +66,6 @@ class UserController extends Controller
      * )
      */
 
-
     protected  $userRepo;
 
     public function __construct(UserRepositoryInterface $userRepository)
@@ -76,13 +75,10 @@ class UserController extends Controller
 
     public function index()
     {
-        $this->userRepo->getAllUsers();
         try {
             return response()->json([
                 "data" => [
-                    "users" => User::with('transactions')
-                        ->select('id', 'name', 'email', 'phone_number', 'created_at')
-                        ->get()
+                    "users" => $this->userRepo->getUsersWithSpecificColumns(['id', 'name', 'email', 'phone_number', 'created_at'], ['transactions'])
                 ],
                 "message" => "List of users"
             ]);
