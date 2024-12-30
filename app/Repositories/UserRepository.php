@@ -14,19 +14,19 @@ class UserRepository implements UserRepositoryInterface
         $this->model = $user;
     }
 
-    public function getAllUsers()
+    public function getAllUsers($relations = [])
     {
-        return $this->model->all();
+        return $this->model->with($relations)->all();
     }
 
-    public function getSpecificColumns(array $columns)
+    public function getUsersWithSpecificColumns(array $columns, $relations = [])
     {
-        return $this->model->select($columns)->get();
+        return $this->model->with($relations)->select($columns)->get();
     }
 
-    public function findUserById($id)
+    public function findUserById($id, $relations = [])
     {
-        return $this->model->findOrFail($id);
+        return $this->model->with($relations)->findOrFail($id);
     }
 
     public function createUser(array $data)
